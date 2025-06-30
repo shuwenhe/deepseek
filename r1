@@ -2,7 +2,7 @@ https://ollama.com/library/deepseek-r1
 
 Deepseek-r1:70b
 Size:42G
-Memory:G
+Memory:28.7 GiB
 GPU:
 ollama run deepseek-r1:70b
 
