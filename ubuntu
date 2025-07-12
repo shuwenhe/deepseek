@@ -1,0 +1,4 @@
+sudo apt install libcurl4-openssl-dev
+git clone https://github.com/libcpr/cpr.git
+cd cpr && cmake . -DBUILD_CPR_TESTS=OFF && make -j && sudo make install
+
