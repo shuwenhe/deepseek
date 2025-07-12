@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <title>DeepSeek Prompt 界面</title>
+</head>
+<body>
+  <h1>DeepSeek Prompt 界面</h1>
+  <form id="promptForm">
+    <label>Prompt: </label>
+    <input type="text" id="promptInput" style="width: 400px;" placeholder="用C++写一个快速排序">
+    <button type="submit">提交</button>
+  </form>
+  <p id="status">⏳ 等待提交...</p>
+  <pre id="result" style="white-space: pre-wrap; background: #f0f0f0; padding: 1em;"></pre>
+
+  <script>
+    const form = document.getElementById("promptForm");
+    const input = document.getElementById("promptInput");
+    const status = document.getElementById("status");
+    const result = document.getElementById("result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.textContent = "⏳ 等待回复中...";
+      result.textContent = "";
+
+      const res = await fetch("http://localhost:8080", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({prompt: input.value})
+      });
+
+      if (res.ok) {
+        const json = await res.json();
+        result.textContent = json.response || "[无结果返回]";
+        status.textContent = "✅ 已完成";
+      } else {
+        status.textContent = "❌ 请求失败: " + res.status;
+        result.textContent = await res.text();
+      }
+    });
+  </script>
+</body>
+</html>
+
